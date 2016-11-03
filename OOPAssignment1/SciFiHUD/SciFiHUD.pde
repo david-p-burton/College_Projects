@@ -13,6 +13,7 @@ void setup()
 //variables
 float fade = 255;
 int gameState = 0;
+int x = 0;
 
 void draw()
 {
@@ -21,6 +22,10 @@ void draw()
      case 0:
      {
        loadIn();
+       if(keyPressed)
+       {
+         gameState = 2;
+       }
        break;
      }
      case 1:
@@ -40,16 +45,24 @@ void draw()
      }
     
   }
-  int ms = millis(); //values from 0 to 
+  
+}
+
+//clock using custom font
+void clock()
+{
+  int ms = millis(); //values from 0 to 999
+  ms = ms % 1000;
   int s = second();  //values from 0 to 59
   int m = minute();  //values from 0 to 59
   int h = hour();    //values from 0 to 23
+  String sa = nf(ms, 3);
   fill(255, 180, 0);
   textFont(f, 16);
-  text(h % 24, 10, height-40);
-  text(m % 60, 35, height-40);
-  text(s % 60, 60, height-40);
-  text(ms % 1000, 85, height-40);
+  text(h % 24 + " :", 10, height-40);
+  text(m % 60 + " :", 32, height-40);
+  text(s % 60 + " :", 53, height-40);
+  text(sa, 76, height-40);
 }
 
 //initial Title card
@@ -73,15 +86,61 @@ void loadIn()
 //interstitial card for a little animation maybe?
 void loading()
 {
-  background(255, 0, 0);
-  gameState = 2;
+  x++;
+  textFont(f, 50);
+  if(x < 60)
+  {
+    text("LOADING. ", (width/2) - 50, (height/2) + 25);
+  }
+  else if(x >= 60 && x <= 120)
+  {
+    text("LOADING. . ", (width/2) - 50, (height/2) + 25);
+  }
+  else
+  {
+    text("LOADING. . .", (width/2) - 50, (height/2) + 25);
+  }
+  //after some seconds (amount denoted by no multiplied by 60)
+  if(x == (60 * 3))
+  {
+    gameState = 2;
+    //reset counter to zero for use elsewhere
+    x = 0;
+  }
 }
 
 //the main menu
 void menu()
 {
-  
+  int r = 20;
+  float R = r * (2/sqrt(3)) + 6;
+  background(1,244,255); 
+  for(int i = 0; i < 20; i++)
+  {
+    polygon( 20 +(R * i), 20 + (r * i) , r, 6);
+  }
+  clock();
 }
+
+//warning sign
+void warning()
+{
+  background(random(255), 0, 0);
+}
+
+//drawing a hex
+void polygon(float x, float y, float radius, int npoints) {
+  float angle = TWO_PI / npoints;
+  beginShape();
+  for (float a = 0; a < TWO_PI; a += angle) {
+    float sx = x + cos(a) * radius;
+    float sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
+
 
 //blur effect to be used?
 void blur()
