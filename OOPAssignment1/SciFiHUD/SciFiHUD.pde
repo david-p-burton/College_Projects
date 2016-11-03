@@ -51,18 +51,26 @@ void draw()
 //clock using custom font
 void clock()
 {
+  noStroke();
+  fill(10,10,180);
+  ellipse(78, height-48, 145, 40);
+  
+  //time
   int ms = millis(); //values from 0 to 999
   ms = ms % 1000;
   int s = second();  //values from 0 to 59
   int m = minute();  //values from 0 to 59
   int h = hour();    //values from 0 to 23
   String sa = nf(ms, 3);
+  
+  fill(255,255,0);
+  ellipse(78,height -48,150, 45);
   fill(255, 180, 0);
-  textFont(f, 16);
-  text(h % 24 + " :", 10, height-40);
-  text(m % 60 + " :", 32, height-40);
-  text(s % 60 + " :", 53, height-40);
-  text(sa, 76, height-40);
+  textFont(f, 24);
+  text(h % 24 + ":", 20, height-40);
+  text(m % 60 + ":", 50, height-40);
+  text(s % 60 + ":", 78, height-40);
+  text(sa, 105, height-40);
 }
 
 //initial Title card
@@ -112,12 +120,31 @@ void loading()
 //the main menu
 void menu()
 {
-  int r = 20;
-  float R = r * (2/sqrt(3)) + 6;
+  float r = 30;
+  float R = r * (2/sqrt(3));
+  float xPos = 30;
+  float yPos = 30;
   background(1,244,255); 
   for(int i = 0; i < 20; i++)
   {
-    polygon( 20 +(R * i), 20 + (r * i) , r, 6);
+    if(i % 2 == 0)
+    {
+      xPos += R + 13;
+      yPos += r;
+      fill(255, 0, 0);
+      polygon(xPos, yPos, r+4, 6);
+      fill(255, 180, 0);
+      polygon(xPos, yPos, r, 6);
+    }
+    else
+    {
+      xPos += R + 13;
+      yPos -= r;
+      fill(255, 0, 0);
+      polygon(xPos, yPos, r+4, 6);
+      fill(255, 180, 0);
+      polygon(xPos, yPos, r, 6);
+    }
   }
   clock();
 }
