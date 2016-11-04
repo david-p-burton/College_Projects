@@ -46,6 +46,8 @@ void draw()
     
   }
   
+  
+  
 }
 
 //clock using custom font
@@ -120,30 +122,38 @@ void loading()
 //the main menu
 void menu()
 {
-  float r = 30;
+  float r = 22;
   float R = r * (2/sqrt(3));
-  float xPos = 30;
-  float yPos = 30;
+  float xPos = (width) - 450;
+  float yPos = height - 60;
+  float yPos2 = yPos - (r * 2);
   background(1,244,255); 
-  for(int i = 0; i < 20; i++)
+  for(int i = 0; i < 10; i++)
   {
+    //for drawing polygons at the bottom of screen
     if(i % 2 == 0)
     {
       xPos += R + 13;
       yPos += r;
+      yPos2 += r + 2;
       fill(255, 0, 0);
-      polygon(xPos, yPos, r+4, 6);
+      polygon(xPos, yPos, r + (r*0.2), 6);
+      polygon(xPos, yPos2, r + (r*0.2), 6);
       fill(255, 180, 0);
       polygon(xPos, yPos, r, 6);
+      polygon(xPos, yPos2, r, 6);
     }
     else
     {
       xPos += R + 13;
       yPos -= r;
+      yPos2 -= r + 2;
       fill(255, 0, 0);
-      polygon(xPos, yPos, r+4, 6);
+      polygon(xPos, yPos, r + (r*0.2), 6);
+      polygon(xPos, yPos2, r + (r*0.2), 6);
       fill(255, 180, 0);
       polygon(xPos, yPos, r, 6);
+      polygon(xPos, yPos2, r, 6);
     }
   }
   clock();
@@ -155,30 +165,16 @@ void warning()
   background(random(255), 0, 0);
 }
 
-//drawing a hex
-void polygon(float x, float y, float radius, int npoints) {
+//drawing a hex/polygon
+void polygon(float x, float y, float radius, int npoints) 
+{
   float angle = TWO_PI / npoints;
   beginShape();
-  for (float a = 0; a < TWO_PI; a += angle) {
+  for (float a = 0; a < TWO_PI; a += angle) 
+  {
     float sx = x + cos(a) * radius;
     float sy = y + sin(a) * radius;
     vertex(sx, sy);
   }
   endShape(CLOSE);
-}
-
-
-
-//blur effect to be used?
-void blur()
-{
-  smooth();
-  background(0);
-  noStroke();
-  fill(25,50,150);
-  ellipse(500,500,210,210);
-  filter(BLUR, 16);
-  noStroke();
-  fill(255,255,0);
-  ellipse(500,500,150,150);
 }
