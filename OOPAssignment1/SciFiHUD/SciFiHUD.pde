@@ -1,3 +1,7 @@
+/*
+MAJOR OVERHAUL COMING TO INCLUDE CLASSES, OBJECTS, ETC.
+*/
+
 //classes
 PImage open;
 PFont f;
