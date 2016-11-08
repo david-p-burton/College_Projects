@@ -8,8 +8,8 @@ ArrayList<Star> stars = new ArrayList<Star>();
 void setup()
 {
   size(800, 800);
-  Table starList = loadTable("stars.csv", "header, csv");
   loadData();
+  printStars();
   
 }
 
@@ -19,19 +19,18 @@ void draw()
 
 void printStars()
 {
-  /*
-  for ()
+  for(int i = 0; i < stars.size(); i++)
   {
     Star part = stars.get(i);
     println(part);
   }
-  */
 }
 
 void loadData()
 {
+  Table starList = loadTable("stars.csv", "header");
   
-  for(int i = 0; i < stars.size(); i++)
+  for(int i = 0; i < starList.getRowCount(); i++)
   {
     TableRow t = starList.getRow(i);
     Star temp = new Star(t);
