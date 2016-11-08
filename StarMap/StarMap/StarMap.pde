@@ -10,7 +10,6 @@ void setup()
   size(800, 800);
   loadData();
   printStars();
-  
 }
 
 //vert lines
@@ -25,22 +24,41 @@ float wgrid2 = 750;
 float zgrid1 = 50;
 float zgrid2 = 50;
 
+//star drawing variables
 float starX;
 float starY;
 float starMass;
 
+//star text!
+float cons = 30;
+float xtext = 50;
+float ytext = 50;
+int free;
+
 void draw()
-{ 
+{
   fill(220, 115, 215);
   stroke(220, 115, 215);
+  textSize(20);
+  
+  for(int i = 0; i < 11; i++)
+  {
+    free = i - 5;
+    text(free, xtext, cons);
+    text(free, ytext, cons);
+    xtext += (width - 100)/10;
+    ytext += (width - 100)/10;
+    
+  }
+  
   //draw a grid
   for(int i = 0; i < 12; i++)
   {
     line(xgrid1, ygrid1, xgrid2, ygrid2);
     line(wgrid1, zgrid1, wgrid2, zgrid2);
-    xgrid1 += 50;
+    xgrid1 += (width - 100)/10;
     xgrid2 = xgrid1;
-    zgrid1 += 50;
+    zgrid1 += (width - 100)/10;
     zgrid2 = zgrid1;
   }
   
