@@ -30,7 +30,7 @@ float starY;
 float starMass;
 
 //star text!
-float cons = 30;
+float cons = 25;
 float xtext = 50;
 float ytext = 50;
 int free;
@@ -45,7 +45,7 @@ void draw()
   {
     free = i - 5;
     text(free, xtext, cons);
-    text(free, ytext, cons);
+    text(free, cons, ytext);
     xtext += (width - 100)/10;
     ytext += (width - 100)/10;
     
