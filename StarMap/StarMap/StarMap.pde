@@ -13,8 +13,47 @@ void setup()
   
 }
 
+//vert lines
+float xgrid1 = 50;
+float ygrid1 = 50;
+float xgrid2 = 50;
+float ygrid2 = 750;
+
+//horz lines
+float wgrid1 = 50;
+float wgrid2 = 750;
+float zgrid1 = 50;
+float zgrid2 = 50;
+
+float starX;
+float starY;
+float starMass;
+
 void draw()
 { 
+  fill(220, 115, 215);
+  stroke(220, 115, 215);
+  //draw a grid
+  for(int i = 0; i < 12; i++)
+  {
+    line(xgrid1, ygrid1, xgrid2, ygrid2);
+    line(wgrid1, zgrid1, wgrid2, zgrid2);
+    xgrid1 += 50;
+    xgrid2 = xgrid1;
+    zgrid1 += 50;
+    zgrid2 = zgrid1;
+  }
+  
+  for(int i = 0; i < stars.size(); i++)
+  {
+    Star temp = stars.get(i);
+    starX = map(temp.x, -5, +5, 50, width - 50);
+    starY = map(temp.y, -5, +5, 50, height - 50);
+    starMass = map(temp.mass, 0, 20, 0, 25);
+    
+    fill(255, 255, 0);
+    ellipse(starX, starY, starMass, starMass);
+  }
 }
 
 void printStars()
