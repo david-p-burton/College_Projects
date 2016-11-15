@@ -1,6 +1,8 @@
 PImage open;
 PFont f;
 ArrayList<Hex> buttons = new ArrayList<Hex>();
+Button vitals;
+
 
 void setup()
 {
@@ -8,6 +10,7 @@ void setup()
   background(0);
   open = loadImage("TitleScreen.jpg");
   f = createFont("digital-7.ttf", 72, true);
+  vitals = new Button(100, 100, 50, 6);
 }
 
 //global variables
@@ -41,7 +44,6 @@ void draw()
      }
      case 3:
      {
-       background(0, 255, 0);
        menu();
        break;
      }
@@ -56,9 +58,12 @@ void draw()
 
 void menu()
 {
+  //background(0);
+  stroke(255);
+  vitals.render();
   for(int i = 0; i < 5; i++)
   {
-      
+    
   }
 }
 
@@ -98,7 +103,6 @@ void loadIn()
        tint(255, fade);
        open.resize(width, height + 10);
        image(open, 0, 0);
-       //gameState = 5;
        if(fade == 10)
        {
          gameState = 1;
