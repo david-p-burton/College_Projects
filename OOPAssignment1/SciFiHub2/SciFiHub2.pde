@@ -2,6 +2,9 @@ PImage open;
 PFont f;
 ArrayList<Hex> buttons = new ArrayList<Hex>();
 Button vitals;
+Button mechBody;
+Button computer;
+Radar menu;
 
 
 void setup()
@@ -11,6 +14,9 @@ void setup()
   open = loadImage("TitleScreen.jpg");
   f = createFont("digital-7.ttf", 72, true);
   vitals = new Button(100, 100, 50, 6);
+  mechBody = new Button(vitals.pos.x, vitals.pos.y + 150, vitals.size, 7);
+  computer = new Button(vitals.pos.x, mechBody.pos.y + 150 , vitals.size, 8);
+  menu = new Radar(width - 110, 115, 160);
 }
 
 //global variables
@@ -58,9 +64,12 @@ void draw()
 
 void menu()
 {
-  //background(0);
+  background(0);
   stroke(255);
   vitals.render();
+  mechBody.render();
+  computer.render();
+  menu.render();
   for(int i = 0; i < 5; i++)
   {
     
