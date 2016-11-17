@@ -5,6 +5,7 @@ Button vitals;
 Button mechBody;
 Button computer;
 Radar menu;
+CPUClock yourCpu;
 
 
 void setup()
@@ -17,6 +18,7 @@ void setup()
   mechBody = new Button(vitals.pos.x, vitals.pos.y + 150, vitals.size, 7);
   computer = new Button(vitals.pos.x, mechBody.pos.y + 150 , vitals.size, 8);
   menu = new Radar(width - 110, 115, 160);
+  yourCpu = new CPUClock(width - 110, 400);
 }
 
 //global variables
@@ -70,10 +72,7 @@ void menu()
   mechBody.render();
   computer.render();
   menu.render();
-  for(int i = 0; i < 5; i++)
-  {
-    
-  }
+  yourCpu.render();
 }
 
 void boot()
