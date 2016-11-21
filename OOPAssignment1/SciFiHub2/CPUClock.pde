@@ -24,8 +24,6 @@ class CPUClock
       stroke(255);
       noFill();
       row = i * step;
-      //float offSet = TWO_PI/ (num * i);
-      //float arcEnd = map(sin(theta+offSet),-1,1, PI, TWO_PI);
       arc(x, y, row, row, -HALF_PI, percent - HALF_PI);
     }
     //colorMode(RGB);
@@ -33,9 +31,6 @@ class CPUClock
     //theta += .0523;
     test = totalMemory() / 1000000;
     test1 = usedMemory() / 1000000;  
-    //tests amount of MB set for this program
-    //println(test + " MB total.");
-    //println(test1 + " MB used.");
     strokeWeight(1);
     ellipse(x, y, diameter, diameter);
     textWrite();

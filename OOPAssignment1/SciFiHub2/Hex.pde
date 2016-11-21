@@ -26,7 +26,6 @@ class Hex
       pushMatrix();
       float angle = PI * i / 3;
       shape.vertex(cos(angle) * size, sin(angle) * size);
-      popMatrix();
     }
     endShape(CLOSE);
     popMatrix();

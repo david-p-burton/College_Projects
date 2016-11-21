@@ -1,4 +1,4 @@
-PImage open;
+PImage open, nerv;
 PFont f, p, b;
 ArrayList<Hex> buttons = new ArrayList<Hex>();
 Button vitals, mechBody, computer, mapMe;
@@ -20,6 +20,8 @@ void setup()
   size (1280, 800);
   background(0);
   open = loadImage("TitleScreen.jpg");
+  nerv = loadImage("nerv.png");
+  nerv.resize(200, 200);
   //opening font
   f = createFont("digital-7.ttf", 72, true);
   //memory font
@@ -57,6 +59,7 @@ void draw()
      }
      case 1:
      {
+       noTint();
        loading();
        break;
      }
@@ -72,26 +75,28 @@ void draw()
      }
      case 4:
      {
-       vitals();
        background(255, 0, 0);
+       vitals();
+
        break;
      }
      case 5:
      {
-       mechBody();
        background(0, 255, 0);
+       mechBody();
        break;
      }
      case 6:
      {
-       computer();
        background(0, 0, 255);
+       computer();
        break;
      }
      case 7:
      {
-       mapMe();
        background(255, 0, 255);
+       mapMe();
+       
        break;
      }
      default:
@@ -117,6 +122,7 @@ void menu()
   mapMe.update();
   menu.render();
   yourCpu.render();
+  image(nerv, 0, height - 210);
 }
 
 void boot()
@@ -189,19 +195,23 @@ void loading()
 void vitals()
 {
   
+  image(nerv, 0, height - 210);
 }
 
 void mechBody()
 {
   
+  image(nerv, 0, height - 210);
 }
 
 void computer()
 {
   
+  image(nerv, 0, height - 210);
 }
 
 void mapMe()
 {
-
+  
+  image(nerv, 0, height - 210);
 }

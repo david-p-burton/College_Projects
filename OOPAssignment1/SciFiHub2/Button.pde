@@ -26,13 +26,12 @@ class Button
     butShape.stroke(255, 160, 0);
     butShape.fill(255, 130, 5);
     butShape.strokeWeight(3);
-    for (int i = 0; i < 6; i++) 
+    for (int i = 0; i < 7; i++) 
     {
-      pushMatrix();
+      //pushMatrix();
       float angle = PI * i / 3;
       butShape.vertex(cos(angle) * size, sin(angle) * size);
     }
-    endShape(CLOSE);
     popMatrix();
   }
   
