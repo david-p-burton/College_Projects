@@ -1,28 +1,43 @@
 PImage open;
-PFont f;
+PFont f, p, b;
 ArrayList<Hex> buttons = new ArrayList<Hex>();
-Button vitals;
-Button mechBody;
-Button computer;
+Button vitals, mechBody, computer, mapMe;
 Radar menu;
 CPUClock yourCpu;
 
+/*
+Name; David Burton
+Student Number; C15802086
+Descriptor; This project is inspired by the animated series "Neon Genesis Evangelion" and its movies,
+"Neon Genesis Evangelion: Death & Rebirth" and "The End of Evangelion" as well as the series of remakes
+dubbed "Rebuild". 
+The interface modelled here is my imagining of what a technician in this sci-fi series might see when
+overseeing a mission being carried out by one of the series' many robots (mechs).
+*/
 
 void setup()
 {
   size (1280, 800);
   background(0);
   open = loadImage("TitleScreen.jpg");
+  //opening font
   f = createFont("digital-7.ttf", 72, true);
-  vitals = new Button(100, 100, 50, 6);
-  mechBody = new Button(vitals.pos.x, vitals.pos.y + 150, vitals.size, 7);
-  computer = new Button(vitals.pos.x, mechBody.pos.y + 150 , vitals.size, 8);
+  //memory font
+  p = createFont("digital-7.ttf", 10, true);
+  //button font
+  b = createFont("digital-7.ttf", 10, true);
+  //button x y size stateChange
+  vitals = new Button(100, 100, 40 , 4, "PILOT\nVITALS");
+  mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "MACHINE\nINTEGRITY");
+  computer = new Button(vitals.pos.x, mechBody.pos.y + seperate , vitals.size, 6, "COMPUTER\nSYSTEMS");
+  mapMe = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 7, "MAP");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
 }
 
 //global variables
 int gameState = 0;
+float seperate = 80;
 int x = 0;
 int fade = 255;
 
@@ -55,6 +70,30 @@ void draw()
        menu();
        break;
      }
+     case 4:
+     {
+       vitals();
+       background(255, 0, 0);
+       break;
+     }
+     case 5:
+     {
+       mechBody();
+       background(0, 255, 0);
+       break;
+     }
+     case 6:
+     {
+       computer();
+       background(0, 0, 255);
+       break;
+     }
+     case 7:
+     {
+       mapMe();
+       background(255, 0, 255);
+       break;
+     }
      default:
      {
        exit();
@@ -67,10 +106,15 @@ void draw()
 void menu()
 {
   background(0);
-  stroke(255);
+  //stroke(255);
   vitals.render();
+  vitals.update();
   mechBody.render();
+  mechBody.update();
   computer.render();
+  computer.update();
+  mapMe.render();
+  mapMe.update();
   menu.render();
   yourCpu.render();
 }
@@ -140,4 +184,24 @@ void loading()
     //reset counter to zero for use elsewhere
     x = 0;
   }
+}
+
+void vitals()
+{
+  
+}
+
+void mechBody()
+{
+  
+}
+
+void computer()
+{
+  
+}
+
+void mapMe()
+{
+
 }

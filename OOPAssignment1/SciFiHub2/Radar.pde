@@ -1,14 +1,6 @@
 class Radar
 {
-  float x;
-  float y;
-  float size;
-  //big hand
-  float end;
-  //small hand
-  float end2;
-  //med hand
-  float end3;
+  float x, y, size, end, end2, end3;
   
   Radar(float x, float y, float size)
   {
