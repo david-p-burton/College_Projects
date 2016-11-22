@@ -1,7 +1,7 @@
 PImage open, nerv;
 PFont f, p, b;
-ArrayList<Hex> buttons = new ArrayList<Hex>();
-Button vitals, mechBody, computer, mapMe;
+Button vitals, mechBody, computer, mapMe, back, quit;
+Clock regClock;
 Radar menu;
 CPUClock yourCpu;
 
@@ -22,6 +22,7 @@ void setup()
   open = loadImage("TitleScreen.jpg");
   nerv = loadImage("nerv.png");
   nerv.resize(200, 200);
+  regClock = new Clock(width - 200, height -100, 100);
   //opening font
   f = createFont("digital-7.ttf", 72, true);
   //memory font
@@ -33,6 +34,8 @@ void setup()
   mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "MACHINE\nINTEGRITY");
   computer = new Button(vitals.pos.x, mechBody.pos.y + seperate , vitals.size, 6, "COMPUTER\nSYSTEMS");
   mapMe = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 7, "MAP");
+  back = new Button(vitals.pos.x, vitals.pos.y + (5.5*seperate), vitals.size, 3, "BACK");
+  quit = new Button(vitals.pos.x, mapMe.pos.y + seperate, vitals.size, 8, "EXIT");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
 }
@@ -99,6 +102,11 @@ void draw()
        
        break;
      }
+     case 8:
+     {
+       quitScreen();
+       break;
+     }
      default:
      {
        exit();
@@ -121,6 +129,9 @@ void menu()
   mapMe.render();
   mapMe.update();
   menu.render();
+  quit.render();
+  quit.update();
+  regClock.placeClock();
   yourCpu.render();
   image(nerv, 0, height - 210);
 }
@@ -130,7 +141,7 @@ void boot()
   background(random(255), 0, 0);
   fill(255, 160, 0);
   textFont(f, 120);
-  text("W A R N I N G", (width/2) - 280, (height/2) - 100);
+  text("W A R N I N G", width/2, (height/2) - 100);
   if(keyPressed)
   {
     gameState = 3;
@@ -142,11 +153,11 @@ void boot()
   if(x % 2 == 0)
   {
     if(x % 4 == 0)  {
-    text("SYSTEM BOOT INITIALISED", (width/2) - 550, (height/2)+150);
+    text("SYSTEM BOOT INITIALISED", width/2, (height/2)+150);
     }
     else
     {
-      text("PRESS START", (width/2) - 250, (height/2)+150);
+      text("PRESS START", width/2, (height/2)+150);
     }
   }
 }
@@ -170,18 +181,20 @@ void loadIn()
 void loading()
 {
   x++;
+  background(0);
   textFont(f, 50);
+  textAlign(CENTER, CENTER);
   if(x < 60)
   {
-    text("LOADING. ", (width/2) - 50, (height/2) + 25);
+    text("LOADING. ", width/2, height/2);
   }
   else if(x >= 60 && x <= 120)
   {
-    text("LOADING. . ", (width/2) - 50, (height/2) + 25);
+    text("LOADING. . ", width/2, height/2);
   }
   else
   {
-    text("LOADING. . .", (width/2) - 50, (height/2) + 25);
+    text("LOADING. . .", width/2, height/2);
   }
   //after some seconds (amount denoted by no multiplied by 60)
   if(x == (60 * 3))
@@ -194,24 +207,70 @@ void loading()
 
 void vitals()
 {
-  
+  back.render();
+  back.update();
   image(nerv, 0, height - 210);
 }
 
 void mechBody()
 {
-  
+  back.render();
+  back.update();
   image(nerv, 0, height - 210);
 }
 
 void computer()
 {
-  
+  back.render();
+  back.update();
   image(nerv, 0, height - 210);
 }
 
 void mapMe()
 {
-  
+  back.render();
+  back.update();
   image(nerv, 0, height - 210);
+}
+
+float quitFade = 31;
+int adder = 5;
+float secondary = 0;
+boolean[] keys = new boolean[1000];
+
+void quitScreen()
+{
+  if(quitFade < 30 || quitFade > 255)
+  {
+    adder *= -1;
+  }
+  
+  if (checkKey('q'))
+  {
+    exit();      
+  }
+  
+  quitFade += adder;
+  secondary = map(quitFade, 30, 255, 30, 160);
+  background(quitFade, secondary, 0);
+}
+
+//reused from YASC
+boolean checkKey(int k)
+{
+  if (keys.length >= k) 
+  {
+    return keys[k] || keys[Character.toUpperCase(k)];  
+  }
+  return false;
+}//end checkKey()
+
+void keyPressed()
+{ 
+  keys[keyCode] = true;
+}//end keyPressed()
+ 
+void keyReleased()
+{
+  keys[keyCode] = false; 
 }

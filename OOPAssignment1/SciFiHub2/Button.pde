@@ -63,7 +63,6 @@ class Button
   
   void update()
   {
-    println(mouseX, mouseY);
     if(mouseX >= cornerX && (mouseX < cornerX + size) && mouseY > cornerY && mouseY < cornerY + size && mousePressed && (mouseButton == LEFT)) 
     {
       gameState = stateChange; 
