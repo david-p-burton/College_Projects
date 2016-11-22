@@ -1,3 +1,7 @@
+import ddf.minim.*;
+Minim minim;
+AudioPlayer song;
+
 PImage open, nerv;
 PFont f, p, b;
 Button vitals, mechBody, computer, mapMe, back, quit;
@@ -8,6 +12,7 @@ CPUClock yourCpu;
 /*
 Name; David Burton
 Student Number; C15802086
+Uses; Minim
 Descriptor; This project is inspired by the animated series "Neon Genesis Evangelion" and its movies,
 "Neon Genesis Evangelion: Death & Rebirth" and "The End of Evangelion" as well as the series of remakes
 dubbed "Rebuild". 
@@ -22,7 +27,7 @@ void setup()
   open = loadImage("TitleScreen.jpg");
   nerv = loadImage("nerv.png");
   nerv.resize(200, 200);
-  regClock = new Clock(width - 200, height -100, 100);
+  regClock = new Clock(width - 145, height -200);
   //opening font
   f = createFont("digital-7.ttf", 72, true);
   //memory font
@@ -38,6 +43,9 @@ void setup()
   quit = new Button(vitals.pos.x, mapMe.pos.y + seperate, vitals.size, 8, "EXIT");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
+  //audio stuff
+  minim = new Minim(this);
+  song = minim.loadFile("Oblivion4OOP.wav", 512);
 }
 
 //global variables
@@ -62,7 +70,6 @@ void draw()
      }
      case 1:
      {
-       noTint();
        loading();
        break;
      }
@@ -78,7 +85,6 @@ void draw()
      }
      case 4:
      {
-       background(255, 0, 0);
        vitals();
 
        break;
@@ -118,6 +124,7 @@ void draw()
 
 void menu()
 {
+  noTint();
   background(0);
   //stroke(255);
   vitals.render();
@@ -207,9 +214,11 @@ void loading()
 
 void vitals()
 {
+  background(0);
   back.render();
   back.update();
   image(nerv, 0, height - 210);
+  
 }
 
 void mechBody()
@@ -236,23 +245,39 @@ void mapMe()
 float quitFade = 31;
 int adder = 5;
 float secondary = 0;
+float songSwitch = 0;
 boolean[] keys = new boolean[1000];
 
 void quitScreen()
 {
+  songSwitch++;
   if(quitFade < 30 || quitFade > 255)
   {
     adder *= -1;
+  }
+  if(songSwitch > 0)
+  {
+    song.play();
   }
   
   if (checkKey('q'))
   {
     exit();      
   }
+  if (checkKey('w'))
+  {
+    songSwitch = 0;
+    song.pause();
+    song.rewind();
+    gameState = 3;      
+  }
   
   quitFade += adder;
   secondary = map(quitFade, 30, 255, 30, 160);
   background(quitFade, secondary, 0);
+  fill(255, 0, 0);
+  textFont(f, 100);
+  text("PRESS Q TO TERMINATE PROCESS\n\nPRESS W TO SAVE HUMANITY", width/2, (height/2) - 100);
 }
 
 //reused from YASC
