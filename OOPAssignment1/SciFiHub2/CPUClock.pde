@@ -8,7 +8,7 @@ class CPUClock
   {
     this.x = x;
     this.y = y;
-    diameter = 220;
+    diameter = 210;
     step = 22;
     num = 10;
   }

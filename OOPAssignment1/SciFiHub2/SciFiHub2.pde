@@ -4,10 +4,12 @@ AudioPlayer song;
 
 PImage open, nerv;
 PFont f, p, b;
-Button vitals, mechBody, computer, mapMe, back, quit;
+Button vitals, mechBody, computer, back, quit;
 Clock regClock;
 Radar menu;
 CPUClock yourCpu;
+Table vitalList;
+ArrayList<Pilot> vital = new ArrayList<Pilot>();
 
 /*
 Name; David Burton
@@ -18,6 +20,11 @@ Descriptor; This project is inspired by the animated series "Neon Genesis Evange
 dubbed "Rebuild". 
 The interface modelled here is my imagining of what a technician in this sci-fi series might see when
 overseeing a mission being carried out by one of the series' many robots (mechs).
+TO DO:
+-Finish drawing pilot health properly
+-Machine integrity
+-Computers
+-Maybe something for main screen background?
 */
 
 void setup()
@@ -38,14 +45,14 @@ void setup()
   vitals = new Button(100, 100, 40 , 4, "PILOT\nVITALS");
   mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "MACHINE\nINTEGRITY");
   computer = new Button(vitals.pos.x, mechBody.pos.y + seperate , vitals.size, 6, "COMPUTER\nSYSTEMS");
-  mapMe = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 7, "MAP");
   back = new Button(vitals.pos.x, vitals.pos.y + (5.5*seperate), vitals.size, 3, "BACK");
-  quit = new Button(vitals.pos.x, mapMe.pos.y + seperate, vitals.size, 8, "EXIT");
+  quit = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 8, "EXIT");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
   //audio stuff
   minim = new Minim(this);
-  song = minim.loadFile("Oblivion4OOP.wav", 512);
+  song = minim.loadFile("NGEOP.mp3", 512);
+  //vitalList = loadTable("shinji.csv", "header");
 }
 
 //global variables
@@ -86,7 +93,6 @@ void draw()
      case 4:
      {
        vitals();
-
        break;
      }
      case 5:
@@ -99,13 +105,6 @@ void draw()
      {
        background(0, 0, 255);
        computer();
-       break;
-     }
-     case 7:
-     {
-       background(255, 0, 255);
-       mapMe();
-       
        break;
      }
      case 8:
@@ -133,19 +132,27 @@ void menu()
   mechBody.update();
   computer.render();
   computer.update();
-  mapMe.render();
-  mapMe.update();
   menu.render();
   quit.render();
   quit.update();
   regClock.placeClock();
   yourCpu.render();
   image(nerv, 0, height - 210);
+  gridDraw();
 }
+
+float bootFade = 1;
+float bootAdd = 10;
 
 void boot()
 {
-  background(random(255), 0, 0);
+  if(bootFade < 0 || bootFade > 255)
+  {
+    bootAdd *= -1;
+  }
+  bootFade += bootAdd;
+  
+  background(bootFade, 0, 0);
   fill(255, 160, 0);
   textFont(f, 120);
   text("W A R N I N G", width/2, (height/2) - 100);
@@ -212,13 +219,43 @@ void loading()
   }
 }
 
+//pilot Vitals
 void vitals()
+{
+  if (checkKey('1'))
+  {
+    pilotSelect = 1; 
+    loadData();
+  }
+  if (checkKey('2'))
+  {
+    pilotSelect = 2;
+    loadData();
+  }
+  if (checkKey('3'))
+  {
+    pilotSelect = 3; 
+    loadData();
+  }
+  drawHealth();
+}
+
+void drawHealth()
 {
   background(0);
   back.render();
   back.update();
   image(nerv, 0, height - 210);
-  
+  noFill();
+  rect(100, 100, 300, 200);
+  for(Pilot p : vital)
+  {
+    float x = map(p.time, 0, 120, 100, width - 200);
+    float y = map(p.heartRate, 0, 150, height - 200, 100);
+    stroke(0, 100, 255);
+    ellipse(x, y, 10, 10);
+    
+  }
 }
 
 void mechBody()
@@ -229,13 +266,6 @@ void mechBody()
 }
 
 void computer()
-{
-  back.render();
-  back.update();
-  image(nerv, 0, height - 210);
-}
-
-void mapMe()
 {
   back.render();
   back.update();
@@ -277,7 +307,74 @@ void quitScreen()
   background(quitFade, secondary, 0);
   fill(255, 0, 0);
   textFont(f, 100);
-  text("PRESS Q TO TERMINATE PROCESS\n\nPRESS W TO SAVE HUMANITY", width/2, (height/2) - 100);
+  text("PRESS Q TO TERMINATE PROCESS\n\nPRESS W RESUME PROCESS", width/2, (height/2) - 100);
+}
+
+float cornerX = 190;
+float cornerY;
+float bCornerX;
+float bCornerY;
+
+void gridDraw()
+{
+  cornerY = ((height - 100) / 15) + 2;
+  bCornerX = width - 410;
+  bCornerY = height - 110.5;
+  float increment = ((width - 100) / 15);
+  float increment1 = (height - 100) / 15;
+  noFill();
+  stroke(255, 180, 0);
+  rect(cornerX, cornerY, width - 410, height - 110.5);
+  fill(255, 180, 0);
+  //x
+  for(int i = 1; i <= 11; i++)
+  {
+    line((increment * i) + cornerX, 50, (increment * i) + 130, height - 62 );
+    line((increment * i) + 130, 50, (increment * i) + 190, height - 62 );
+  }
+  
+  //y
+  for(int i = 1; i <= 16; i++)
+  {
+    line(190, (increment1 * i) + 2, width - 220,(increment1 * i) + 2);
+  }
+  
+  stroke(255);
+}
+
+int pilotSelect;
+
+void loadData()
+{
+  switch(pilotSelect)
+  {
+    case 1:
+    {
+      vitalList = loadTable("shinji.csv", "header");
+      populateArrayList();
+      break;
+    }
+    case 2:
+    {
+      vitalList = loadTable("david.csv", "header");
+      populateArrayList();
+      break;
+    }
+  }
+}
+
+void populateArrayList()
+{
+  for (int i = vital.size() - 1; i >= 0; i--) 
+  {
+    vital.remove(i);
+  }
+
+  for(TableRow row : vitalList.rows())
+   {
+     Pilot p = new Pilot(row);
+     vital.add(p);
+   }
 }
 
 //reused from YASC

@@ -28,7 +28,6 @@ class Button
     butShape.strokeWeight(3);
     for (int i = 0; i < 7; i++) 
     {
-      //pushMatrix();
       float angle = PI * i / 3;
       butShape.vertex(cos(angle) * size, sin(angle) * size);
     }
