@@ -3,6 +3,7 @@ Minim minim;
 AudioPlayer song;
 
 PImage open, nerv;
+Icon shinji1, david, bryan;
 PFont f, p, b;
 Button vitals, mechBody, computer, back, quit;
 Clock regClock;
@@ -49,10 +50,12 @@ void setup()
   quit = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 8, "EXIT");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
+  shinji1 = new Icon(width - 260, (height / 2) - 150, "shinji.png", 200);
+  david = new Icon(shinji1.x, shinji1.y, "david.png", shinji1.size);
+  bryan = new Icon(shinji1.x, shinji1.y, "bryan.png", shinji1.size);
   //audio stuff
   minim = new Minim(this);
   song = minim.loadFile("NGEOP.mp3", 512);
-  //vitalList = loadTable("shinji.csv", "header");
 }
 
 //global variables
@@ -238,7 +241,26 @@ void vitals()
     loadData();
   }
   drawHealth();
+  
+  if(pilotSelect == 1)
+  {
+    shinji1.render();
+  }
+  else if(pilotSelect == 2)
+  {
+    david.render();
+  }
+  else if(pilotSelect == 3)
+  {
+    bryan.render();
+  }
+  
+  textFont(p, 30);
+  textAlign(CENTER);
+  text("Press a number 1 - 3 for pilot health stats", width/2, 30);
+  
 }
+
 
 void drawHealth()
 {
@@ -247,12 +269,21 @@ void drawHealth()
   back.update();
   image(nerv, 0, height - 210);
   noFill();
-  rect(100, 100, 300, 200);
+  stroke(255, 180, 0);
+  rect(cornerX + 50, 50, width - 550, height - 110);
+  textFont(p, 20);
+  textAlign(CENTER);
+  for(int i = 0; i < 15; i ++)
+  {
+    float w = cornerX + 50 + (i * (width - 550)/14);
+    text((i * 10), w, height - 40);
+  }
+  text("TIME (SECONDS)", (width/2) -30 , height - 20);
   for(Pilot p : vital)
   {
-    float x = map(p.time, 0, 120, 100, width - 200);
-    float y = map(p.heartRate, 0, 150, height - 200, 100);
-    stroke(0, 100, 255);
+    float x = map(p.time, 0, 120, cornerX + 55, width - 400);
+    float y = map(p.heartRate, 0, 150, height - 110, 50);
+    //stroke(0, 100, 255);
     ellipse(x, y, 10, 10);
     
   }
@@ -358,6 +389,15 @@ void loadData()
     {
       vitalList = loadTable("david.csv", "header");
       populateArrayList();
+      break;
+    }
+    case 3:
+    {
+      vitalList = loadTable("bryan.csv", "header");
+      populateArrayList();
+    }
+    default:
+    {
       break;
     }
   }
