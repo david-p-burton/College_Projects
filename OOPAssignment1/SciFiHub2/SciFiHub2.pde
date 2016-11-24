@@ -3,7 +3,7 @@ Minim minim;
 AudioPlayer song;
 
 PImage open, nerv;
-Icon shinji1, david, bryan;
+Icon shinji1, rei, karl;
 PFont f, p, b;
 Button vitals, mechBody, computer, back, quit;
 Clock regClock;
@@ -22,10 +22,10 @@ dubbed "Rebuild".
 The interface modelled here is my imagining of what a technician in this sci-fi series might see when
 overseeing a mission being carried out by one of the series' many robots (mechs).
 TO DO:
--Finish drawing pilot health properly
+-Name axis for pilot
 -Machine integrity
 -Computers
--Maybe something for main screen background?
+-Maybe something for main screen background? moving hexes?
 */
 
 void setup()
@@ -43,16 +43,16 @@ void setup()
   //button font
   b = createFont("digital-7.ttf", 10, true);
   //button x y size stateChange
-  vitals = new Button(100, 100, 40 , 4, "PILOT\nVITALS");
+  vitals = new Button(100, 100, 60 , 4, "PILOT\nVITALS");
   mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "MACHINE\nINTEGRITY");
   computer = new Button(vitals.pos.x, mechBody.pos.y + seperate , vitals.size, 6, "COMPUTER\nSYSTEMS");
-  back = new Button(vitals.pos.x, vitals.pos.y + (5.5*seperate), vitals.size, 3, "BACK");
   quit = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 8, "EXIT");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
+  back = new Button(yourCpu.x, height - 120, vitals.size, 3, "BACK");
   shinji1 = new Icon(width - 260, (height / 2) - 150, "shinji.png", 200);
-  david = new Icon(shinji1.x, shinji1.y, "david.png", shinji1.size);
-  bryan = new Icon(shinji1.x, shinji1.y, "bryan.png", shinji1.size);
+  rei = new Icon(shinji1.x, shinji1.y, "rei.png", shinji1.size);
+  karl = new Icon(shinji1.x, shinji1.y, "karl.png", shinji1.size);
   //audio stuff
   minim = new Minim(this);
   song = minim.loadFile("NGEOP.mp3", 512);
@@ -60,7 +60,7 @@ void setup()
 
 //global variables
 int gameState = 0;
-float seperate = 80;
+float seperate = 120;
 int x = 0;
 int fade = 255;
 
@@ -69,6 +69,7 @@ void draw()
 {
   switch (gameState)
   {
+    //title screen
      case 0:
      {
        loadIn();
@@ -78,38 +79,48 @@ void draw()
        }
        break;
      }
+     //loading
      case 1:
      {
+       if(keyPressed)
+       {
+         gameState = 2;
+       }
        loading();
        break;
      }
+     //wait for user to press something
      case 2:
      {
        boot();
        break;
      }
+     //main menu
      case 3:
      {
        menu();
        break;
      }
+     //show pilot health stats (read in from .csv files)
      case 4:
      {
        vitals();
        break;
      }
+     //The robots details
      case 5:
      {
-       background(0, 255, 0);
        mechBody();
        break;
      }
+     //computer details
      case 6:
      {
        background(0, 0, 255);
        computer();
        break;
      }
+     //quit screen
      case 8:
      {
        quitScreen();
@@ -242,17 +253,38 @@ void vitals()
   }
   drawHealth();
   
+  textAlign(CENTER, CENTER);
+  textFont(f, 30);
+ 
   if(pilotSelect == 1)
   {
     shinji1.render();
+    if(frameCount % 5000 >0 || frameCount % 5000 < 30){
+    if((e = random(0, 100)) > 98)
+    {
+      shinji1.statics();
+    }}
+    text("Pilot - Shinji Ikari", shinji1.x + 105, shinji1.y - 10    );
   }
   else if(pilotSelect == 2)
   {
-    david.render();
+    rei.render();
+    if(frameCount % 5000 >0 || frameCount % 5000 < 30){
+    if((e = random(0, 100)) > 95)
+    {
+      rei.statics();
+    }}
+    text("Pilot - Rei Ayanami", shinji1.x + 105, shinji1.y - 10);
   }
   else if(pilotSelect == 3)
   {
-    bryan.render();
+    karl.render();
+    if(frameCount % 5000 >0 || frameCount % 5000 < 30){
+    if((e = random(0, 100)) > 92)
+    {
+      karl.statics();
+    }}
+    text("Pilot - Kaworu Nagisa", shinji1.x + 105, shinji1.y - 10);
   }
   
   textFont(p, 30);
@@ -261,7 +293,7 @@ void vitals()
   
 }
 
-
+float e;
 void drawHealth()
 {
   background(0);
@@ -281,16 +313,47 @@ void drawHealth()
   text("TIME (SECONDS)", (width/2) -30 , height - 20);
   for(Pilot p : vital)
   {
+    flag ++;
     float x = map(p.time, 0, 120, cornerX + 55, width - 400);
     float y = map(p.heartRate, 0, 150, height - 110, 50);
     //stroke(0, 100, 255);
     ellipse(x, y, 10, 10);
-    
+    if(flag > 1)
+    {
+      line(x, y, prevX, prevY);
+    }
+    prevX = x;
+    prevY = y;
   }
+  flag = 0;
 }
+
+float prevX;
+float prevY;
+int flag;
+float add1 = 2;
+float add = 1;
 
 void mechBody()
 {
+  add1 += add;
+  if(add1 > 65)
+  {
+    add1 = 2;
+  }
+  int sizeX = width/20;
+  int sizeY = width/20;
+  background(0);
+  noStroke();
+  fill(0, 180, 255);
+  for(int i = 0; i < width + 60; i+=sizeX * 2)
+  {
+    for( int j = 0; j < height + 60; j++)
+    {
+      ellipse((((j + 1) % 2) * sizeY) - 55 + add1 + i ,(j * sizeY) + add1 - 55, sizeX + 20, sizeY);
+    }
+  }
+  
   back.render();
   back.update();
   image(nerv, 0, height - 210);
@@ -387,13 +450,13 @@ void loadData()
     }
     case 2:
     {
-      vitalList = loadTable("david.csv", "header");
+      vitalList = loadTable("rei.csv", "header");
       populateArrayList();
       break;
     }
     case 3:
     {
-      vitalList = loadTable("bryan.csv", "header");
+      vitalList = loadTable("karl.csv", "header");
       populateArrayList();
     }
     default:

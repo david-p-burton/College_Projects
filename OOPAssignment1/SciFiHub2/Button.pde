@@ -23,7 +23,7 @@ class Button
     pushMatrix();
     butShape = createShape();
     butShape.beginShape();
-    butShape.stroke(255, 160, 0);
+    butShape.stroke(0, 139, 139);
     butShape.fill(255, 130, 5);
     butShape.strokeWeight(3);
     for (int i = 0; i < 7; i++) 

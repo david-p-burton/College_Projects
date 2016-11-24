@@ -15,4 +15,15 @@ class Icon extends Portrait
     pic.resize((int)size, (int)size);
     image(pic, x, y);
   }
+  
+  void statics()
+  {
+    pic.resize((int)size, (int)size);
+    image(pic, x, y);
+    tint(255, 100);
+    image(pic, x + 7, y + 7);
+    tint(255, 80);
+    image(pic, x - 17, y + 7);
+    tint(255, 255);
+  }
 }
