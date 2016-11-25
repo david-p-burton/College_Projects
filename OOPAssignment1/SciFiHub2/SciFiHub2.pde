@@ -16,6 +16,7 @@ ArrayList<Pilot> vital = new ArrayList<Pilot>();
 Name; David Burton
 Student Number; C15802086
 Uses; Minim
+Total number of commits so far; 16
 Descriptor; This project is inspired by the animated series "Neon Genesis Evangelion" and its movies,
 "Neon Genesis Evangelion: Death & Rebirth" and "The End of Evangelion" as well as the series of remakes
 dubbed "Rebuild". 
@@ -353,6 +354,21 @@ void mechBody()
       ellipse((((j + 1) % 2) * sizeY) - 55 + add1 + i ,(j * sizeY) + add1 - 55, sizeX + 20, sizeY);
     }
   }
+  
+  fill(0);
+  rect(100, 50, width - 200, height - 250);
+  rect(200, 50, width - 400, height - 100);
+  
+  fill(255);
+  stroke(255);
+  line(105, 55, width - 105, 55);
+  line(105, 55, 105, height - 205);
+  line(width - 105, 55, width - 105, height - 205);
+  line(width - 105, height - 205, width - 205, height - 205);
+  line(105, height - 205, 105 + 100, height - 205);
+  line(205, height - 55, 205, height - 205);
+  line(205, height - 55, width - 205, height - 55);
+  line(width - 205, height - 55, width - 205, height - 205);
   
   back.render();
   back.update();
