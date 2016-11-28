@@ -1,6 +1,6 @@
 import ddf.minim.*;
-Minim minim;
-AudioPlayer song;
+Minim minim, clicker;
+AudioPlayer song, click;
 
 PImage open, nerv;
 Icon shinji1, rei, karl;
@@ -16,17 +16,15 @@ ArrayList<Pilot> vital = new ArrayList<Pilot>();
 Name; David Burton
 Student Number; C15802086
 Uses; Minim
-Total number of commits so far; 16
+Total number of commits so far; 17
 Descriptor; This project is inspired by the animated series "Neon Genesis Evangelion" and its movies,
 "Neon Genesis Evangelion: Death & Rebirth" and "The End of Evangelion" as well as the series of remakes
 dubbed "Rebuild". 
 The interface modelled here is my imagining of what a technician in this sci-fi series might see when
 overseeing a mission being carried out by one of the series' many robots (mechs).
 TO DO:
--Name axis for pilot
--Machine integrity
--Computers
--Maybe something for main screen background? moving hexes?
+-Menu - Animation on grid
+-Machine integrity - Content?
 */
 
 void setup()
@@ -55,8 +53,10 @@ void setup()
   rei = new Icon(shinji1.x, shinji1.y, "rei.png", shinji1.size);
   karl = new Icon(shinji1.x, shinji1.y, "karl.png", shinji1.size);
   //audio stuff
+  clicker = new Minim(this);
   minim = new Minim(this);
   song = minim.loadFile("NGEOP.mp3", 512);
+  click = clicker.loadFile("click.wav", 512);
 }
 
 //global variables
@@ -306,18 +306,32 @@ void drawHealth()
   rect(cornerX + 50, 50, width - 550, height - 110);
   textFont(p, 20);
   textAlign(CENTER);
+  //x-axis for time and y-axis for heartRate
   for(int i = 0; i < 15; i ++)
   {
     float w = cornerX + 50 + (i * (width - 550)/14);
+    line(w, 50, w, height - 60);
+    line(cornerX + 50, 50  + (49.4 * i), width -310, 50 + (49.4 * i));
     text((i * 10), w, height - 40);
   }
+  
+  for( int i = 0; i < 15; i++)
+  {
+    
+    text( 150 - (i * 10), width - 290, 50 + (i * 49.4));
+  }
   text("TIME (SECONDS)", (width/2) -30 , height - 20);
+  pushMatrix();
+  translate(cornerX + 45, height/2);
+  rotate(-HALF_PI);
+  text("Heart Rate (BPM)", 0, 0);
+  popMatrix();
   for(Pilot p : vital)
   {
     flag ++;
     float x = map(p.time, 0, 120, cornerX + 55, width - 400);
     float y = map(p.heartRate, 0, 150, height - 110, 50);
-    //stroke(0, 100, 255);
+    stroke(8, 232, 223);
     ellipse(x, y, 10, 10);
     if(flag > 1)
     {

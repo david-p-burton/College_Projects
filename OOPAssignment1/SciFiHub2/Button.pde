@@ -64,7 +64,9 @@ class Button
   {
     if(mouseX >= cornerX && (mouseX < cornerX + size) && mouseY > cornerY && mouseY < cornerY + size && mousePressed && (mouseButton == LEFT)) 
     {
-      gameState = stateChange; 
+      click.play();
+      gameState = stateChange;
+      click.rewind();
     }
   }
 }
