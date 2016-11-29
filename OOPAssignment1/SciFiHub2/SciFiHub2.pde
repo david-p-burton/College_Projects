@@ -4,7 +4,7 @@ AudioPlayer song, click;
 
 PImage open, nerv;
 Icon shinji1, rei, karl;
-PFont f, p, b;
+PFont f, p, b, jrpg;
 Button vitals, mechBody, computer, back, quit;
 Clock regClock;
 Radar menu;
@@ -41,6 +41,8 @@ void setup()
   p = createFont("digital-7.ttf", 10, true);
   //button font
   b = createFont("digital-7.ttf", 10, true);
+  //explain text
+  jrpg = createFont("jrpg.otf", 10, true);
   //button x y size stateChange
   vitals = new Button(100, 100, 60 , 4, "PILOT\nVITALS");
   mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "MACHINE\nINTEGRITY");
@@ -348,6 +350,7 @@ float prevY;
 int flag;
 float add1 = 2;
 float add = 1;
+float interval = 195;
 
 void mechBody()
 {
@@ -384,10 +387,65 @@ void mechBody()
   line(205, height - 55, width - 205, height - 55);
   line(width - 205, height - 55, width - 205, height - 205);
   
+  textFont(jrpg, 24);
+  textAlign(LEFT, CENTER);
+  
+  if((control + h) < 0)
+  {
+    h += reveal;
+  }
+  else if(control + h1 < 0 && (control + h) >= 0)
+  {
+    h1 += reveal;
+  }
+  else if((control + h2) < 0 && (control + h1) >= 0)
+  {
+    h2 += reveal;
+  }
+  else if((control + h3) < 0 && (control + h2) >= 0)
+  {
+    h3 += reveal;
+  }
+  else if((control + h4) < 0 && (control + h3) >= 0)
+  {
+    h4 += reveal;
+  }
+  else if((control + h5) < 0 && (control + h4) >= 0)
+  {
+    h5 += reveal;
+  }
+  else if((control + h6) < 0 && (control + h5) >= 0)
+  {
+    h6 += reveal;
+  }
+  noStroke();
+  fill(255);
+  //48 chars per line = 48 * 7 chars = 336
+  text("The year is 20XX.15 years ago the world was rocked", 210, height - interval);
+  text("by an event called \"The Impact\". Half the human", 210, height - interval + 20);
+  text("population has been wiped out and humanity has", 210, height - interval + 40);
+  text("been pushed back to the largest cities. Recently", 210, height - interval + 60);
+  text("alien ships, known as Angels, have been attacking", 210, height - interval + 80);
+  text("earth. A Japanese military group known as NERV", 210, height - interval + 100);
+  text("has been formed to fight these Angels.", 210, height - interval + 120);
+  fill(0);
+  rect(width - 210, height - 200, control + h, 20);
+  rect(width - 210, height - 200 + 20, control + h1, 20);
+  rect(width - 210, height - 200 + 40, control + h2, 20);
+  rect(width - 210, height - 200 + 60, control + h3, 20);
+  rect(width - 210, height - 200 + 80, control + h4, 20);
+  rect(width - 210, height - 200 + 100, control + h5, 20);
+  rect(width - 210, height - 200 + 120, control + h6, 20);
+  
   back.render();
   back.update();
   image(nerv, 0, height - 210);
 }
+
+int control = -860;
+int h, h1, h2, h3, h4, h5, h6;
+float reveal = 12;
+//12
 
 void computer()
 {
