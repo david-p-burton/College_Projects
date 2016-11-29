@@ -17,15 +17,12 @@ ArrayList<Pilot> vital = new ArrayList<Pilot>();
 Name; David Burton
 Student Number; C15802086
 Uses; Minim
-Total number of commits so far; 17
+Total number of commits so far; 23
 Descriptor; This project is inspired by the animated series "Neon Genesis Evangelion" and its movies,
 "Neon Genesis Evangelion: Death & Rebirth" and "The End of Evangelion" as well as the series of remakes
 dubbed "Rebuild". 
 The interface modelled here is my imagining of what a technician in this sci-fi series might see when
 overseeing a mission being carried out by one of the series' many robots (mechs).
-TO DO:
--Menu - Animation on grid
--Machine integrity - Content?
 */
 
 void setup()
