@@ -11,7 +11,6 @@ class Icon extends Portrait
   
   void render()
   {
-    //println(size);
     pic.resize((int)size, (int)size);
     image(pic, x, y);
   }

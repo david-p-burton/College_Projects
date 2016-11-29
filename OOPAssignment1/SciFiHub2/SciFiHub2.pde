@@ -4,8 +4,9 @@ AudioPlayer song, click;
 
 PImage open, nerv;
 Icon shinji1, rei, karl;
+Bots ramiel, mechs;
 PFont f, p, b, jrpg;
-Button vitals, mechBody, computer, back, quit;
+Button vitals, mechBody, back, quit;
 Clock regClock;
 Radar menu;
 CPUClock yourCpu;
@@ -44,16 +45,17 @@ void setup()
   //explain text
   jrpg = createFont("jrpg.otf", 10, true);
   //button x y size stateChange
-  vitals = new Button(100, 100, 60 , 4, "PILOT\nVITALS");
-  mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "MACHINE\nINTEGRITY");
-  computer = new Button(vitals.pos.x, mechBody.pos.y + seperate , vitals.size, 6, "COMPUTER\nSYSTEMS");
-  quit = new Button(vitals.pos.x, computer.pos.y + seperate, vitals.size, 8, "EXIT");
+  vitals = new Button(100, 100, 70 , 4, "PILOT\nVITALS");
+  mechBody = new Button(vitals.pos.x, vitals.pos.y + seperate, vitals.size, 5, "WORLD\nSTATUS");
+  quit = new Button(vitals.pos.x, mechBody.pos.y + seperate, vitals.size, 8, "EXIT");
   menu = new Radar(width - 110, 115, 160);
   yourCpu = new CPUClock(width - 110, 400);
   back = new Button(yourCpu.x, height - 120, vitals.size, 3, "BACK");
   shinji1 = new Icon(width - 260, (height / 2) - 150, "shinji.png", 200);
   rei = new Icon(shinji1.x, shinji1.y, "rei.png", shinji1.size);
   karl = new Icon(shinji1.x, shinji1.y, "karl.png", shinji1.size);
+  ramiel = new Bots(width - 420, 50, "ramiel.png", 320);
+  mechs = new Bots( 200, height-600, "mechs.png", ramiel.size);
   //audio stuff
   clicker = new Minim(this);
   minim = new Minim(this);
@@ -63,7 +65,7 @@ void setup()
 
 //global variables
 int gameState = 0;
-float seperate = 120;
+float seperate = 140;
 int x = 0;
 int fade = 255;
 
@@ -102,6 +104,13 @@ void draw()
      case 3:
      {
        menu();
+       h = 0;
+       h1 = 0;
+       h2 = 0;
+       h3 = 0;
+       h4 = 0;
+       h5 = 0;
+       h6 = 0;
        break;
      }
      //show pilot health stats (read in from .csv files)
@@ -117,12 +126,12 @@ void draw()
        break;
      }
      //computer details
-     case 6:
+     /*case 6:
      {
        background(0, 0, 255);
        computer();
        break;
-     }
+     }*/
      //quit screen
      case 8:
      {
@@ -147,8 +156,6 @@ void menu()
   vitals.update();
   mechBody.render();
   mechBody.update();
-  computer.render();
-  computer.update();
   menu.render();
   quit.render();
   quit.update();
@@ -421,7 +428,7 @@ void mechBody()
   noStroke();
   fill(255);
   //48 chars per line = 48 * 7 chars = 336
-  text("The year is 20XX.15 years ago the world was rocked", 210, height - interval);
+  text("The year is 20XX. 15 years ago the world was hit", 210, height - interval);
   text("by an event called \"The Impact\". Half the human", 210, height - interval + 20);
   text("population has been wiped out and humanity has", 210, height - interval + 40);
   text("been pushed back to the largest cities. Recently", 210, height - interval + 60);
@@ -437,6 +444,8 @@ void mechBody()
   rect(width - 210, height - 200 + 100, control + h5, 20);
   rect(width - 210, height - 200 + 120, control + h6, 20);
   
+  ramiel.render();
+  mechs.render();
   back.render();
   back.update();
   image(nerv, 0, height - 210);
@@ -445,15 +454,6 @@ void mechBody()
 int control = -860;
 int h, h1, h2, h3, h4, h5, h6;
 float reveal = 12;
-//12
-
-void computer()
-{
-  back.render();
-  back.update();
-  image(nerv, 0, height - 210);
-}
-
 float quitFade = 31;
 int adder = 5;
 float secondary = 0;
