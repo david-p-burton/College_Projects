@@ -9,6 +9,7 @@ import ddf.minim.*;
 Minim gameMusic, menuMusic;
 AudioPlayer menu, game;
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+ArrayList<Stars> stars = new ArrayList<Stars>();
 boolean[] keyStrokes = new boolean[500];
 Player player0;
 
@@ -32,6 +33,8 @@ int gameState = 2;
 
 void draw()
 {
+  
+  
   switch(gameState)
   {
     case 0:

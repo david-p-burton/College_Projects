@@ -5,7 +5,6 @@ abstract class GameObject
   
   GameObject()
   {
-    //println("GameObj default constructor");
   }
   
   abstract void create();

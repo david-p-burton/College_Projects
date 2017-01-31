@@ -34,6 +34,13 @@ class Baddie extends GameObject
     }
   }
   
+  /*
+  needs to add in a method which removes the object from the gameObject 
+  Am guessing that this method will go into the class of the object being removed.
+  This will apply to all objects which need removal
+  maybe a removal method in the gameObject class?
+  */
+  
   void render()
   {
     pos.x--;

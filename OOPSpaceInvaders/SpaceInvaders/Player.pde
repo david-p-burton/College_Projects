@@ -1,16 +1,19 @@
 class Player extends GameObject
 {
   PShape shape;
-  float radius;
+  int counter, lives;
   char up, down, fire;
+  
   
   Player(float x, float y, char up, char down, char fire)
   {
     pos = new PVector(x, y);
-    this.radius = 20;
+    this.size = 20;
     this.up = up;
     this.down = down;
     this.fire = fire;
+    this.lives = 3;
+    this.counter = 0;
     
     create();
   }
@@ -21,9 +24,9 @@ class Player extends GameObject
     shape.beginShape();
     shape.stroke(255);
     shape.fill(255);
-    shape.vertex(radius, 0);
-    shape.vertex(-radius, -radius);
-    shape.vertex(-radius, radius);
+    shape.vertex(size, 0);
+    shape.vertex(-size, -size);
+    shape.vertex(-size, size);
     shape.endShape(CLOSE);
   }
   
@@ -47,7 +50,16 @@ class Player extends GameObject
     }
     if(checkKey(fire))
     {
-      
+      if(counter > 0 && frameCount % 25 == 0)
+      {
+        counter = 0;
+      }
+      if(counter == 0)
+      {
+        Bullet t = new Bullet(pos.x, pos.y);  
+        gameObjects.add(t);
+        counter = 1;
+      }
     }
   }
 }
