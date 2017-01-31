@@ -36,7 +36,7 @@ void draw()
   {
     case 0:
     {
-      
+      background(255,0,0);
       if(keyPressed)
       {
         gameState = 1;
@@ -51,6 +51,12 @@ void draw()
     case 2: //game mode 1
     {
       background(0);
+      //enemy spawn trigger
+      if(frameCount % 900 == 0 || frameCount == 5)
+      {
+        enemySpawn();
+      }
+      
       for (int i = gameObjects.size() - 1 ; i >= 0; i--)
       {
         GameObject use = gameObjects.get(i);
@@ -68,6 +74,21 @@ void draw()
     {
       
       break;
+    }
+  }
+}
+
+void enemySpawn()
+{
+  float x = width - 300; 
+  float y = height / 5;
+  
+  for(int i = 0; i < 3; i++)
+  {
+    for(int j = 0; j < 4; j++)
+    {
+      Baddie b = new Baddie(x + (400/3 * i), y + ((height/5) * (j) ));
+      gameObjects.add(b);
     }
   }
 }
