@@ -17,7 +17,7 @@ class Baddie extends GameObject
     shape.stroke(255);
     shape.fill(255);
     shape.vertex(-radius, 0);
-    shape.vertex(-radius, -radius);
+    shape.vertex(+radius, -radius);
     shape.vertex(-radius, radius);
     shape.endShape(CLOSE);
   }
