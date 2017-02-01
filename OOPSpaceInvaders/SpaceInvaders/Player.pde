@@ -2,6 +2,7 @@ class Player extends GameObject
 {
   PShape shape;
   int counter, lives;
+  float shotSpeed;
   char up, down, fire;
   
   
@@ -14,6 +15,7 @@ class Player extends GameObject
     this.fire = fire;
     this.lives = 3;
     this.counter = 0;
+    this.shotSpeed = 25;
     
     create();
   }
@@ -50,7 +52,7 @@ class Player extends GameObject
     }
     if(checkKey(fire))
     {
-      if(counter > 0 && frameCount % 25 == 0)
+      if(counter > 0 && frameCount % shotSpeed == 0)
       {
         counter = 0;
       }
