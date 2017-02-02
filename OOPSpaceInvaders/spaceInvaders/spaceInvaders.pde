@@ -13,6 +13,7 @@ ArrayList<Stars> stars = new ArrayList<Stars>();
 boolean[] keyStrokes = new boolean[500];
 Player player0;
 
+
 void setup()
 {
   size(900, 600);
@@ -26,6 +27,10 @@ void setup()
   player0 = new Player(35, height/2, 'w', 's', ' ');
   gameObjects.add(player0);
   
+  //test
+  PowerFast test = new PowerFast(width - 600, random(10, height - 10) );
+  //test
+  gameObjects.add(test);
   
 }
 
@@ -85,6 +90,9 @@ void enemySpawn()
 {
   float x = width - 300; 
   float y = height / 5;
+  
+  //test
+  
   
   for(int i = 0; i < 3; i++)
   {
