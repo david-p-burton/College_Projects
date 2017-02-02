@@ -63,5 +63,19 @@ class Player extends GameObject
         counter = 1;
       }
     }
+    
+    for(int i = 0; i < gameObjects.size(); i++)
+    {
+      GameObject t = gameObjects.get(i);
+      if(t instanceof PowerUp)
+      {
+        PowerUp p = (PowerUp)t;
+        if(dist(t.pos.x, t.pos.y, this.pos.x, this.pos.y) < size + 5)
+        {
+          p.applyTo(this);
+          gameObjects.remove(t);
+        }
+      }
+    }
   }
 }
