@@ -43,6 +43,21 @@ class Baddie extends GameObject
   
   void render()
   {
-    pos.x--;
+    pos.x -= 3;
+    
+    for(int i = 0; i < gameObjects.size(); i++)
+    {
+      GameObject t = gameObjects.get(i);
+      if(t instanceof Bullet)
+      {
+        if(dist(t.pos.x, t.pos.y, this.pos.x, this.pos.y) < radius + 5)
+        {
+          gameObjects.remove(t);
+          gameObjects.remove(this);
+        }
+      }
+      
+    }
+        
   }
 }

@@ -1,18 +1,26 @@
 class Bullet extends GameObject
 {
     PShape shape;
+    float timeAlive, death;
     
     Bullet(float x, float y)
     {
       pos = new PVector(x, y);
       this.size = 10;
+      this.timeAlive = 0;
+      this.death = 3.0f;
       
       create();
     }
   
     void render()
-    {
+    { 
       pos.x += 3.5;
+      timeAlive += 1.0f/60.0f;
+      if (timeAlive > death)
+      {
+        gameObjects.remove(this);
+      }
     }
     
     void update()

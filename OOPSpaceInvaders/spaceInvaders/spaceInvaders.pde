@@ -60,12 +60,21 @@ void draw()
     {
       background(0);
       //enemy spawn trigger
-      if(frameCount % 900 == 0 || frameCount == 5)
+      if(frameCount % 150 == 0 || frameCount % 5 == 0)
       {
         enemySpawn();
       }
+      if(frameCount % 300 == 0)
+      {
+        for(int i = 0; i < 4; i++)
+        {
+          enemySpawn();
+        }
+      }
       
-      for (int i = gameObjects.size() - 1 ; i >= 0; i--)
+      //this must be in ascending order as a sudden decrease in ArrayList size makes the compiler unhappy!
+      //for(int i = gameObjects.size()-1; i >= 0; i--)
+      for(int i = 0; i < gameObjects.size(); i++)
       {
         GameObject use = gameObjects.get(i);
         use.update();
@@ -86,20 +95,22 @@ void draw()
   }
 }
 
+float spawnTimer = 180;
+
 void enemySpawn()
 {
-  float x = width - 300; 
+  float x = width + 20; 
   float y = height / 5;
   
-  //test
-  
-  
-  for(int i = 0; i < 3; i++)
+  if(frameCount % spawnTimer == 0)
   {
-    for(int j = 0; j < 4; j++)
+    for(int i = 0; i < 3; i++)
     {
-      Baddie b = new Baddie(x + (400/3 * i), y + ((height/5) * (j) ));
-      gameObjects.add(b);
+      for(int j = 0; j < 1; j++)
+      {
+        Baddie b = new Baddie(x + (400/3 * i), y + (random(height/5, height - 250)));
+        gameObjects.add(b);
+      }
     }
   }
 }
