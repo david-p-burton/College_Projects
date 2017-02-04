@@ -9,7 +9,7 @@ import ddf.minim.*;
 Minim gameMusic, menuMusic;
 AudioPlayer menu, game;
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
-ArrayList<Stars> stars = new ArrayList<Stars>();
+ArrayList<Stars> starArray = new ArrayList<Stars>();
 boolean[] keyStrokes = new boolean[500];
 Player player0;
 
@@ -32,16 +32,30 @@ void setup()
   //test
   gameObjects.add(test);
   
+  for(int i = 0; i < 200; i++)
+  {
+    //check
+    Stars s = new Stars();
+    starArray.add(s);
+  }
+  
 }
 
 int gameState = 2;
 
 void draw()
 {
-  
+  background(0);
+  for(int i = starArray.size()-1; i >= 0; i--)
+    {
+      //check
+      Stars use = starArray.get(i);
+      use.update();
+      use.display();
+    }
   
   switch(gameState)
-  {
+  { 
     case 0:
     {
       background(255,0,0);
@@ -58,7 +72,6 @@ void draw()
     }
     case 2: //game mode 1
     {
-      background(0);
       //enemy spawn trigger
       if(frameCount % 150 == 0 || frameCount % 5 == 0)
       {
