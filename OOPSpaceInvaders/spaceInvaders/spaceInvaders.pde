@@ -50,8 +50,8 @@ void draw()
     {
       //check
       Stars use = starArray.get(i);
-      use.update();
-      use.display();
+      //use.update();
+      //use.display();
     }
   
   switch(gameState)

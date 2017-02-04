@@ -1,6 +1,6 @@
 class Stars
 {
-  float shine, size, theta, shineAdd, travel;
+  float shine, size, size2, size3, theta, shineAdd, travel;
   int chance;
   PShape shape;
   PVector pos;
@@ -9,6 +9,8 @@ class Stars
   {
     pos = new PVector(random(-20, 900 + 20), random(0, 900));
     this.size = random(5, 25);
+    this.size2 = size/2;
+    this.size3 = size/4;
     this.shine = random(1, 255);
     this.shineAdd = 5;
     this.travel=random(1, 10);
@@ -46,9 +48,16 @@ class Stars
       shape.stroke(shine);
       shape.fill(shine);
       shape.vertex(0, size);
-      shape.vertex(size/2, size);
-      shape.vertex((3*size)/4, size/4);
+      shape.vertex(size2, 0);
       shape.vertex(size, 0);
+      shape.vertex(size2, -size2);
+      shape.vertex(+3*size3, -size + (size3/2));
+      shape.vertex(0, +size);
+      shape.vertex(-3*size3, -size + (size3/2));
+      shape.vertex(-size2, -size2);
+      shape.vertex(-size, 0);
+      shape.vertex(-size2, 0);
+      shape.vertex(0, size);
       shape.endShape(CLOSE);
       
     }
