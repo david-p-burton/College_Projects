@@ -90,14 +90,13 @@ void draw()
     
     case 1: //setup/game menu?
     {
+      menu.play();
       text("START", (width/2) + 50, height - 100 );
       text("EXIT", (width/2) + 41, height - 60);
       imageMode(CENTER);
       text("KIND OF LIKE", width/2, 42);
       image(open, width/2, 100);
       selector();
-      
-      menu.play();
       break;
     }
     
@@ -144,6 +143,15 @@ void selector()
 {
    imageMode(CENTER);
    player.resize(70, 45);
+   
+   if(checkKey('w'))
+   {
+     selector = 1;
+   }
+   else if(checkKey('s'))
+   {
+     selector = 0;
+   }
    if(selector == 1)
    {
      image(player, 400, height - 108 );
@@ -151,6 +159,17 @@ void selector()
    if(selector == 0)
    {
      image(player, 400, height - 67);
+   }
+   
+   if(selector == 1 && checkKey(' '))
+   {
+     menu.pause();
+     menu.rewind();
+     gameState = 2;
+   }
+   else if(selector == 0 && checkKey(' '))
+   {
+     exit();
    }
 }
 
