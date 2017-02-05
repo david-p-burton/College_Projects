@@ -12,6 +12,8 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Stars> starArray = new ArrayList<Stars>();
 boolean[] keyStrokes = new boolean[500];
 Player player0;
+PFont gameText;
+PImage open, player;
 
 
 void setup()
@@ -19,18 +21,15 @@ void setup()
   size(900, 600);
   background(0);
   noCursor();
+  open = loadImage("title.png");
+  player = loadImage("viper.gif");
   gameMusic = new Minim(this);
   menuMusic = new Minim(this);
   menu = menuMusic.loadFile("flameMan.mp3", 512);
   game = gameMusic.loadFile("moon.mp3", 512);
-  
-  player0 = new Player(35, height/2, 'w', 's', ' ');
+  gameText = createFont("game.ttf", 30, true);
+  player0 = new Player(55, height/2, 'w', 's', ' ');
   gameObjects.add(player0);
-  
-  //test
-  PowerFast test = new PowerFast(width - 600, random(10, height - 10) );
-  //test
-  gameObjects.add(test);
   
   for(int i = 0; i < 200; i++)
   {
@@ -41,7 +40,9 @@ void setup()
   
 }
 
-int gameState = 2;
+int swap = 1;
+int gameState = 0;
+int selector = 1;
 
 void draw()
 {
@@ -50,26 +51,57 @@ void draw()
     {
       //check
       Stars use = starArray.get(i);
-      //use.update();
-      //use.display();
+      use.update();
+      use.display();
     }
   
   switch(gameState)
   { 
     case 0:
     {
-      background(255,0,0);
+      background(0);
+      String print;
+      
       if(keyPressed)
       {
         gameState = 1;
       }
+      imageMode(CENTER);
+      image(open, width/2, height/2);
+      textFont(gameText, 20);
+      textAlign(CENTER, CENTER);
+      text("KIND OF LIKE", width/2, (height/2) - 60);
+      if(frameCount % 45 == 0)
+      {
+        swap *= -1;
+      }
+      if(swap == 1)
+      {
+        print = "";
+      }
+      else
+      {
+        print = "PRESS ANY BUTTON TO START";
+      }
+      text(print, width/2, height - 35);
       break;
     }
+    
+    
     case 1: //setup/game menu?
     {
+      text("START", (width/2) + 50, height - 100 );
+      text("EXIT", (width/2) + 41, height - 60);
+      imageMode(CENTER);
+      text("KIND OF LIKE", width/2, 42);
+      image(open, width/2, 100);
+      selector();
       
+      menu.play();
       break;
     }
+    
+    
     case 2: //game mode 1
     {
       //enemy spawn trigger
@@ -93,6 +125,7 @@ void draw()
         use.update();
         use.render();
       }
+      powerUp();
       game.play();
       break;
     }
@@ -102,18 +135,53 @@ void draw()
     }
     default:
     {
-      
       break;
     }
   }
 }
 
-float spawnTimer = 180;
+void selector()
+{
+   imageMode(CENTER);
+   player.resize(70, 45);
+   if(selector == 1)
+   {
+     image(player, 400, height - 108 );
+   }
+   if(selector == 0)
+   {
+     image(player, 400, height - 67);
+   }
+}
 
+void powerUp()
+{
+  float luck;
+  if(frameCount % 30 == 0)
+  {
+    luck = random(0, 100);
+    if(luck > 95)
+    {
+      PowerFast test = new PowerFast(width - 600, random(10, height - 10) );
+      gameObjects.add(test);
+    }
+  }
+}
+
+
+float spawnTimer = 180;
 void enemySpawn()
 {
   float x = width + 20; 
   float y = height / 5;
+  
+  if(frameCount % 600 == 0)
+  {
+    if(spawnTimer >= 0)
+    {
+      spawnTimer -= 20;
+    }
+  }
   
   if(frameCount % spawnTimer == 0)
   {

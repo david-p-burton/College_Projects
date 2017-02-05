@@ -8,12 +8,12 @@ class Stars
   Stars()
   {
     pos = new PVector(random(-20, 900 + 20), random(0, 900));
-    this.size = random(5, 25);
+    this.size = random(2, 12);
     this.size2 = size/2;
     this.size3 = size/4;
-    this.shine = random(1, 255);
+    this.shine = random(70, 180);
     this.shineAdd = 5;
-    this.travel=random(1, 10);
+    this.travel=random(0.1, 10);
     if(random(0, 100) > 50)
     {
       this.chance = 1;
@@ -52,7 +52,7 @@ class Stars
       shape.vertex(size, 0);
       shape.vertex(size2, -size2);
       shape.vertex(+3*size3, -size + (size3/2));
-      shape.vertex(0, +size);
+      shape.vertex(0, -size);
       shape.vertex(-3*size3, -size + (size3/2));
       shape.vertex(-size2, -size2);
       shape.vertex(-size, 0);
@@ -69,11 +69,6 @@ class Stars
     translate(pos.x, pos.y);
     shape(shape, 0, 0);
     popMatrix();
-    if(shine < 0 || shine > 255)
-    {
-      shineAdd *= -1;
-    }
-    shine += shineAdd;
   }
   
   void display()
@@ -83,5 +78,10 @@ class Stars
     {
       pos.x = width + 20;
     }
+    if(shine < 0 || shine > 255)
+    {
+      this.shineAdd *= -1;
+    }
+    this.shine += this.shineAdd;
   }
 }

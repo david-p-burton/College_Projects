@@ -6,7 +6,7 @@ class Baddie extends GameObject
   Baddie(float x, float y)
   {
     pos = new PVector(x, y);
-    radius = 20;
+    radius = 35;
     radius2 = radius/2;
     radius3 = radius/4;
     create();
@@ -26,8 +26,8 @@ class Baddie extends GameObject
     */
     shape = createShape();
       shape.beginShape();
-      shape.stroke(255);
-      shape.fill(255);
+      shape.stroke(255, 165 ,0);
+      shape.fill(255, 165 ,0);
       shape.vertex(0, radius);
       shape.vertex(radius2, 0);
       shape.vertex(radius, 0);
@@ -64,7 +64,7 @@ class Baddie extends GameObject
   
   void render()
   {
-    pos.x -= 3;
+    pos.x -= 5;
     
     for(int i = 0; i < gameObjects.size(); i++)
     {

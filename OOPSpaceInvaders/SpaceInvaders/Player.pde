@@ -22,6 +22,7 @@ class Player extends GameObject
   
   void create()
   {
+    /*
     shape = createShape();
     shape.beginShape();
     shape.stroke(255);
@@ -30,13 +31,18 @@ class Player extends GameObject
     shape.vertex(-size, -size);
     shape.vertex(-size, size);
     shape.endShape(CLOSE);
+    */
   }
   
   void update()
   {
     pushMatrix();
     translate(pos.x, pos.y);
-    shape(shape, 0, 0);
+    //shape(shape, 0, 0);
+    imageMode(CENTER);
+    player.resize(105, 60);
+    image(player, 0, 0);
+    
     popMatrix();
   }
   
