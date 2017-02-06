@@ -49,18 +49,13 @@ class Baddie extends GameObject
     rotate(PI/2);
     shape(shape, 0, 0);
     popMatrix();
-    if(pos.x < 78)
+    
+    //if player loses the game
+    if(pos.x < 75)
     {
-      gameState = 0;
+      gameState = 3;
     }
   }
-  
-  /*
-  needs to add in a method which removes the object from the gameObject 
-  Am guessing that this method will go into the class of the object being removed.
-  This will apply to all objects which need removal
-  maybe a removal method in the gameObject class?
-  */
   
   void render()
   {

@@ -91,6 +91,7 @@ void draw()
     case 1: //setup/game menu?
     {
       menu.play();
+      textFont(gameText, 20);
       text("START", (width/2) + 50, height - 100 );
       text("EXIT", (width/2) + 41, height - 60);
       imageMode(CENTER);
@@ -104,7 +105,7 @@ void draw()
     case 2: //game mode 1
     {
       //enemy spawn trigger
-      if(frameCount % 150 == 0 || frameCount % 5 == 0)
+      if(frameCount % 60 == 0 || frameCount % 40 == 0)
       {
         enemySpawn();
       }
@@ -130,6 +131,7 @@ void draw()
     }
     case 3: //game over
     {
+      gameEnd();
       break; 
     }
     default:
@@ -137,6 +139,61 @@ void draw()
       break;
     }
   }
+}
+
+int cleanUp = 0;
+int count = 0;
+
+//method to show end of game
+void gameEnd()
+{
+    background(0);
+    if(cleanUp == 0)
+    {
+      for(int i = gameObjects.size() - 1; i >= 1; i--)
+      {
+        GameObject use = gameObjects.get(i);
+        gameObjects.remove(use);
+      }
+      cleanUp = 1;
+    }
+    
+    String print;
+    
+    if(frameCount % 45 == 0)
+    {
+      swap *= -1;
+    }
+    
+    if(swap == 1)
+    {
+      print = "";
+    }
+    else
+    {       
+      print = "GAME\nOVER";
+    }
+    textFont(gameText, 50);
+    textAlign(CENTER, CENTER);
+    text(print, width/2, height/2);
+    textFont(gameText, 15);
+    print = "press any key to go back to menu";
+    text(print, width/2, (height/2) + 200);
+    count++;
+    
+    if(count > 25)
+    {
+      if(keyPressed)
+      {
+        gameState = 1;
+        count = 0;
+      }
+    }
+    
+    game.pause();
+    game.rewind();
+    menu.pause();
+    menu.rewind();
 }
 
 void selector()
@@ -178,8 +235,8 @@ void powerUp()
   float luck;
   if(frameCount % 30 == 0)
   {
-    luck = random(0, 100);
-    if(luck > 95)
+    luck = random(0, 300);
+    if(luck > 290)
     {
       PowerFast test = new PowerFast(width - 600, random(10, height - 10) );
       gameObjects.add(test);
@@ -194,7 +251,7 @@ void enemySpawn()
   float x = width + 20; 
   float y = height / 5;
   
-  if(frameCount % 600 == 0)
+  if(frameCount % 360 == 0)
   {
     if(spawnTimer >= 0)
     {
