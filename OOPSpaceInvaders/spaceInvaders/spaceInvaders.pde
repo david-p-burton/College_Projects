@@ -6,14 +6,15 @@ Descriptor; This is my take on Space Invaders/Gradius/Japanese shoot 'em ups.
 */
 
 import ddf.minim.*;
-Minim gameMusic, menuMusic;
-AudioPlayer menu, game;
+Minim gameMusic, menuMusic, deathMusic;
+AudioPlayer menu, game, death;
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Stars> starArray = new ArrayList<Stars>();
 boolean[] keyStrokes = new boolean[500];
 Player player0;
 PFont gameText;
 PImage open, player;
+XML hiScore;
 
 
 void setup()
@@ -25,6 +26,8 @@ void setup()
   player = loadImage("viper.gif");
   gameMusic = new Minim(this);
   menuMusic = new Minim(this);
+  deathMusic = new Minim(this);
+  death = deathMusic.loadFile("death.wav", 512);
   menu = menuMusic.loadFile("flameMan.mp3", 512);
   game = gameMusic.loadFile("moon.mp3", 512);
   gameText = createFont("game.ttf", 30, true);
@@ -43,6 +46,7 @@ void setup()
 int swap = 1;
 int gameState = 0;
 int selector = 1;
+int score = 0;
 
 void draw()
 {
@@ -90,6 +94,8 @@ void draw()
     
     case 1: //setup/game menu?
     {
+      death.pause();
+      death.rewind();
       menu.play();
       textFont(gameText, 20);
       text("START", (width/2) + 50, height - 100 );
@@ -126,6 +132,7 @@ void draw()
         use.render();
       }
       powerUp();
+      scoreDisplay();
       game.play();
       break;
     }
@@ -147,6 +154,8 @@ int count = 0;
 //method to show end of game
 void gameEnd()
 {
+    
+    death.play();
     background(0);
     if(cleanUp == 0)
     {
@@ -177,16 +186,22 @@ void gameEnd()
     textAlign(CENTER, CENTER);
     text(print, width/2, height/2);
     textFont(gameText, 15);
+    print = "SCORE = " + score;
+    text(print, width/2, (height/2) + 100);
     print = "press any key to go back to menu";
     text(print, width/2, (height/2) + 200);
     count++;
     
     if(count > 25)
     {
+      //write out score to file
+      
+      
       if(keyPressed)
       {
         gameState = 1;
         count = 0;
+        score = 0;
       }
     }
     
@@ -230,6 +245,13 @@ void selector()
    }
 }
 
+void scoreDisplay()
+{
+  textAlign(CENTER);
+  textFont(gameText, 17);
+  String print;
+  text("SCORE-" + score, width - 75, 35);
+}
 void powerUp()
 {
   float luck;

@@ -70,6 +70,7 @@ class Baddie extends GameObject
         {
           gameObjects.remove(t);
           gameObjects.remove(this);
+          score++;
         }
       }
       
