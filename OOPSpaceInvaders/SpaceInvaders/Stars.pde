@@ -42,23 +42,25 @@ class Stars
     }
     else if(chance == 2)
     {
-      
+      //shape of star original credit to Daniel Shiffman
+      //https://processing.org/tutorials/pshape/
       shape = createShape();
       shape.beginShape();
       shape.stroke(shine);
       shape.fill(shine);
-      shape.vertex(0, size);
-      shape.vertex(size2, 0);
-      shape.vertex(size, 0);
-      shape.vertex(size2, -size2);
-      shape.vertex(+3*size3, -size + (size3/2));
-      shape.vertex(0, -size);
-      shape.vertex(-3*size3, -size + (size3/2));
-      shape.vertex(-size2, -size2);
-      shape.vertex(-size, 0);
-      shape.vertex(-size2, 0);
-      shape.vertex(0, size);
+      shape.vertex(0, -50);
+      shape.vertex(14, -20);
+      shape.vertex(47, -15);
+      shape.vertex(23, 7);
+      shape.vertex(29, 40);
+      shape.vertex(0, 25);
+      shape.vertex(-29, 40);
+      shape.vertex(-23, 7);
+      shape.vertex(-47, -15);
+      shape.vertex(-14, -20);
+      shape.scale(random(0.05, 0.2));
       shape.endShape(CLOSE);
+      
       
     }
   }

@@ -14,7 +14,7 @@ boolean[] keyStrokes = new boolean[500];
 Player player0;
 PFont gameText;
 PImage open, player;
-XML hiScore;
+XML hiScore; //for writing out to 
 
 
 void setup()
@@ -34,10 +34,12 @@ void setup()
   player0 = new Player(55, height/2, 'w', 's', ' ');
   gameObjects.add(player0);
   
-  for(int i = 0; i < 200; i++)
+  for(int i = 0; i < 250; i++)
   {
     //check
     Stars s = new Stars();
+    s.theta = random(-0.05, 0.05);
+    s.shape.rotate(random(0, 2*PI));
     starArray.add(s);
   }
   
@@ -55,6 +57,7 @@ void draw()
     {
       //check
       Stars use = starArray.get(i);
+      use.shape.rotate(use.theta);
       use.update();
       use.display();
     }
@@ -201,6 +204,7 @@ void gameEnd()
       {
         gameState = 1;
         count = 0;
+        spawnTimer = 180;
         score = 0;
       }
     }
@@ -249,7 +253,6 @@ void scoreDisplay()
 {
   textAlign(CENTER);
   textFont(gameText, 17);
-  String print;
   text("SCORE-" + score, width - 75, 35);
 }
 void powerUp()
