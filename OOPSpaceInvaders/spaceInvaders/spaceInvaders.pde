@@ -1,7 +1,7 @@
 /*
 Name; David Burton
 Student Number; C15802086
-Commits;
+Commits; 21
 Descriptor; This is my take on Gradius/Japanese side scrolling shoot 'em ups.
 */
 
@@ -14,7 +14,6 @@ boolean[] keyStrokes = new boolean[500];
 Player player0;
 PFont gameText;
 PImage open, player;
-PrintWriter output;
 
 
 void setup()
@@ -33,7 +32,6 @@ void setup()
   gameText = createFont("game.ttf", 30, true);
   player0 = new Player(55, height/2, 'w', 's', ' ');
   gameObjects.add(player0);
-  
   PowerSpread test = new PowerSpread(width - 600, random(10, height - 10) );
   gameObjects.add(test);
   
@@ -47,16 +45,9 @@ void setup()
     starArray.add(s);
   }
   
-  hiScore = loadStrings("hiScore.txt");
-  topScore = Integer.parseInt(hiScore[0]);
-  output = createWriter("hiScore.txt");
-  
-  
-  
 }
 
-String hiScore[];
-int topScore;
+int hiScore;
 int swap = 1;
 int gameState = 0;
 int selector = 1;
@@ -115,7 +106,7 @@ void draw()
       textFont(gameText, 20);
       text("START", (width/2) + 50, height - 100 );
       text("EXIT", (width/2) + 41, height - 60);
-      text("HIGH SCORE - " + topScore, width/2, height/2);
+      text("HIGH SCORE - " + hiScore, width/2, height/2);
       imageMode(CENTER);
       text("KIND OF LIKE", width/2, 42);
       image(open, width/2, 100);
@@ -175,20 +166,18 @@ void gameEnd()
     background(0);
     if(cleanUp == 0)
     {
+      
       for(int i = gameObjects.size() - 1; i >= 1; i--)
       {
         GameObject use = gameObjects.get(i);
         gameObjects.remove(use);
       }
-      cleanUp = 1;
       
-      if(topScore <= score)
+      if(hiScore <= score)
       {
-        topScore = score;
-        output.println(topScore);
-        output.flush();
-        output.close();
+        hiScore = score;
       }
+      cleanUp = 1;
     }
     
     String print;
@@ -215,7 +204,7 @@ void gameEnd()
     print = "press any key to go back to menu";
     text(print, width/2, (height/2) + 200);
     count++;
-    if(topScore <= score)
+    if(hiScore <= score)
     {
       text("NEW HIGH SCORE", width/2, (height/2) + 150);
     }
