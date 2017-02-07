@@ -2,7 +2,7 @@
 Name; David Burton
 Student Number; C15802086
 Commits;
-Descriptor; This is my take on Space Invaders/Gradius/Japanese shoot 'em ups.
+Descriptor; This is my take on Gradius/Japanese side scrolling shoot 'em ups.
 */
 
 import ddf.minim.*;
@@ -33,6 +33,10 @@ void setup()
   gameText = createFont("game.ttf", 30, true);
   player0 = new Player(55, height/2, 'w', 's', ' ');
   gameObjects.add(player0);
+  
+  PowerSpread test = new PowerSpread(width - 600, random(10, height - 10) );
+  gameObjects.add(test);
+  
   
   for(int i = 0; i < 250; i++)
   {
@@ -114,7 +118,7 @@ void draw()
     case 2: //game mode 1
     {
       //enemy spawn trigger
-      if(frameCount % 60 == 0 || frameCount % 40 == 0)
+      if(frameCount % 60 == 0)
       {
         enemySpawn();
       }
@@ -206,6 +210,7 @@ void gameEnd()
         count = 0;
         spawnTimer = 180;
         score = 0;
+        cleanUp = 0;
       }
     }
     
@@ -263,9 +268,16 @@ void powerUp()
     luck = random(0, 300);
     if(luck > 290)
     {
-      PowerFast test = new PowerFast(width - 600, random(10, height - 10) );
-      gameObjects.add(test);
+        PowerFast test = new PowerFast(width - 600, random(10, height - 10) );
+        gameObjects.add(test);
     }
+  }
+  
+  luck = random(0, 101);
+  if(luck > 100.5)
+  {
+      PowerSpread test = new PowerSpread(width - 600, random(10, height - 10) );
+      gameObjects.add(test);
   }
 }
 
@@ -274,9 +286,9 @@ float spawnTimer = 180;
 void enemySpawn()
 {
   float x = width + 20; 
-  float y = height / 5;
+  float y = height / 6;
   
-  if(frameCount % 360 == 0)
+  if(frameCount % 400 == 0)
   {
     if(spawnTimer >= 0)
     {

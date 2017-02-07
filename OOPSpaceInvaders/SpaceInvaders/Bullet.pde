@@ -15,7 +15,7 @@ class Bullet extends GameObject
   
     void render()
     { 
-      pos.x += 3.5;
+      pos.x += 10;
       timeAlive += 1.0f/60.0f;
       if (timeAlive > death)
       {
