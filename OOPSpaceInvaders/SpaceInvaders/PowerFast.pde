@@ -12,7 +12,7 @@ class PowerFast extends GameObject implements PowerUp
   
   void applyTo(Player p)
   {
-    p.shotSpeed = 5;
+    p.shotSpeed = 3;
   }
   
   void create()

@@ -14,7 +14,7 @@ boolean[] keyStrokes = new boolean[500];
 Player player0;
 PFont gameText;
 PImage open, player;
-XML hiScore; //for writing out to 
+PrintWriter output;
 
 
 void setup()
@@ -47,8 +47,16 @@ void setup()
     starArray.add(s);
   }
   
+  hiScore = loadStrings("hiScore.txt");
+  topScore = Integer.parseInt(hiScore[0]);
+  output = createWriter("hiScore.txt");
+  
+  
+  
 }
 
+String hiScore[];
+int topScore;
 int swap = 1;
 int gameState = 0;
 int selector = 1;
@@ -107,6 +115,7 @@ void draw()
       textFont(gameText, 20);
       text("START", (width/2) + 50, height - 100 );
       text("EXIT", (width/2) + 41, height - 60);
+      text("HIGH SCORE - " + topScore, width/2, height/2);
       imageMode(CENTER);
       text("KIND OF LIKE", width/2, 42);
       image(open, width/2, 100);
@@ -172,6 +181,14 @@ void gameEnd()
         gameObjects.remove(use);
       }
       cleanUp = 1;
+      
+      if(topScore <= score)
+      {
+        topScore = score;
+        output.println(topScore);
+        output.flush();
+        output.close();
+      }
     }
     
     String print;
@@ -198,6 +215,10 @@ void gameEnd()
     print = "press any key to go back to menu";
     text(print, width/2, (height/2) + 200);
     count++;
+    if(topScore <= score)
+    {
+      text("NEW HIGH SCORE", width/2, (height/2) + 150);
+    }
     
     if(count > 25)
     {

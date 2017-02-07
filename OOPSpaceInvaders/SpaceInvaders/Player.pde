@@ -2,7 +2,7 @@ class Player extends GameObject
 {
   PShape shape;
   int counter, lives;
-  float shotSpeed;
+  float shotSpeed, timer;
   char up, down, fire;
   
   
@@ -15,7 +15,8 @@ class Player extends GameObject
     this.fire = fire;
     this.lives = 3;
     this.counter = 0;
-    this.shotSpeed = 25;
+    this.shotSpeed = 20;
+    this.timer = 0;
     
     create();
   }
@@ -44,6 +45,16 @@ class Player extends GameObject
     image(player, 0, 0);
     
     popMatrix();
+    
+    if(shotSpeed == 3)
+    {
+      timer++;
+      if(timer > 180)
+      {
+        shotSpeed = 20;
+        timer = 0;
+      }
+    }
   }
   
   void render()
