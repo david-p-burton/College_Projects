@@ -1,7 +1,7 @@
 /*
 Name; David Burton
 Student Number; C15802086
-Commits; 21
+Commits; 25
 Descriptor; This is my take on Gradius/Japanese side scrolling shoot 'em ups.
 */
 
@@ -10,10 +10,12 @@ Minim gameMusic, menuMusic, deathMusic;
 AudioPlayer menu, game, death;
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 ArrayList<Stars> starArray = new ArrayList<Stars>();
+ArrayList<Score> scoreArray = new ArrayList<Score>();
 boolean[] keyStrokes = new boolean[500];
 Player player0;
 PFont gameText;
 PImage open, player;
+Table scoreList;
 
 
 void setup()
@@ -34,6 +36,16 @@ void setup()
   gameObjects.add(player0);
   PowerSpread test = new PowerSpread(width - 600, random(10, height - 10) );
   gameObjects.add(test);
+  
+  scoreList = loadTable("hiScore.csv", "header");
+  populateArrayList();
+  
+  for(int i = 0; i < 2; i++)
+  {
+    Score s = scoreArray.get(0);
+    hiScore = s.hiScore;
+  }
+  
   
   
   for(int i = 0; i < 250; i++)
@@ -176,6 +188,21 @@ void gameEnd()
       if(hiScore <= score)
       {
         hiScore = score;
+        for(int i = scoreList.getRowCount() - 1; i >= 0; i--)
+        {
+          scoreList.removeRow(i);
+        }
+        
+        TableRow newRow = scoreList.addRow();
+        newRow.setFloat("hiScore", hiScore);
+        //THIS IS IMPORTANT!!!
+        //This is a critical line. The game will crash if not run on a mac with the user name David
+        //This is because the .csv files with the saveTable command automatically are saved to the
+        //sketch folder rather than the sketch data folder
+        //the only way to put these files into the DATA folder is to provide the absolute path to them while saving
+        //This feature could be removed but I liked saving the score on my end. This feature will be removed in the public
+        //version
+        saveTable(scoreList, "/Users/David/desktop/github/College_Projects/OOPSpaceInvaders/SpaceInvaders/data/hiScore.csv");
       }
       cleanUp = 1;
     }
@@ -289,6 +316,20 @@ void powerUp()
       PowerSpread test = new PowerSpread(width - 600, random(10, height - 10) );
       gameObjects.add(test);
   }
+}
+
+void populateArrayList()
+{
+  for (int i = scoreArray.size() - 1; i >= 0; i--) 
+  {
+    scoreArray.remove(i);
+  }
+
+  for(TableRow row : scoreList.rows())
+   {
+     Score s = new Score(row);
+     scoreArray.add(s);
+   }
 }
 
 
