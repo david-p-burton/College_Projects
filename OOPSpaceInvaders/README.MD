@@ -27,9 +27,10 @@ ways.
 Some of this was made possible with the use of interfaces e.g how the powerups interact with the player. I have made extensive
 use of classes, both abstract as well as classes that can be instanciated.
 
-Seperate to the game objects ArrayList is the stars in the background of this game. They have their own seperate ArrayList.
-These stars are given a random shape (one of two possible) and are assigned a random tint/shade and speed. Upon reaching off screen
-to the left, they are placed off screen to the right, giving the illusion of the player flying through space. To exhance this
-illusion further, all stars travel from right to left to give the illusion of great speed.
+Seperate to the game objects ArrayList is the stars in the background of this game. They have their own seperate ArrayList. Upon reaching off screen to the left, they are placed off screen to the right, giving the illusion of the player flying through space. To exhance this illusion further, all stars travel from right to left to give the illusion of great speed.
 
 <h2>Things of Note</h2>
+The main things to note in this project is how the gameObjects ArrayList is used. Each object in the game inherits from the abstract class GameObject. This allows me to put every game object into the same ArrayList and allows the differnt classes in the list to have their own methods such as draw and update while only having to call these similarly named methods only once.
+
+The other main thing of note is the stars which appear in the background of the game. While these were fairly simple to do,
+they look quite impressive in my opnion. All thats needed is the Stars class, a for loop to populate an ArrayList with Stars objects, and then calling the method to display them. When a star is created, it is randomly assigned one of two possible shapes, a colour (shade/tint), a size, speed and a speed of rotation. I really like how the effect of these stars make it feel like the player is travelling though space in their ship.
